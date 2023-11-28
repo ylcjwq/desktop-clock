@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 //定义时钟组件
 const DesktopClock: React.FC = () => {
@@ -30,16 +30,46 @@ const DesktopClock: React.FC = () => {
       const hourNumbers = () => {
         const hourArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         ctx.beginPath();
-        ctx.font = "30px fangsong";
+        ctx.font = "20px fangsong";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#000";
         for (let i = 0; i < hourArr.length; i++) {
           ctx.fillText(
             hourArr[i].toString(),
-            84 * Math.cos(((i * 30 - 60) * Math.PI) / 180),
-            84 * Math.sin(((i * 30 - 60) * Math.PI) / 180)
+            80 * Math.cos(((i * 30 - 60) * Math.PI) / 180),
+            80 * Math.sin(((i * 30 - 60) * Math.PI) / 180)
           );
+        }
+
+        for (let i = 0; i < 60; i++) {
+          if (i % 5 === 0) {
+            ctx.beginPath();
+            ctx.arc(
+              94 * Math.cos(((i * 6 - 300) * Math.PI) / 180),
+              94 * Math.sin(((i * 6 - 300) * Math.PI) / 180),
+              2,
+              0,
+              2 * Math.PI,
+              true
+            );
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.stroke();
+          } else {
+            ctx.beginPath();
+            ctx.arc(
+              94 * Math.cos(((i * 6 - 300) * Math.PI) / 180),
+              94 * Math.sin(((i * 6 - 300) * Math.PI) / 180),
+              1,
+              0,
+              2 * Math.PI,
+              true
+            );
+            ctx.fillStyle = "#ccc";
+            ctx.fill();
+            ctx.stroke();
+          }
         }
       };
 

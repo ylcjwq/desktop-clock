@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, screen } from "electron";
+import { app, BrowserWindow, screen } from "electron";
 import path from "node:path";
 
 // The built directory structure
@@ -21,8 +21,8 @@ const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 600,
-    height: 500,
+    width: 300,
+    height: 300,
     // titleBarStyle: "hidden",
     transparent: true,
     frame: false,
