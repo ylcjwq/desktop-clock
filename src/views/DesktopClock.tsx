@@ -19,7 +19,7 @@ const DesktopClock: React.FC = () => {
         //绘制表盘圆心
         ctx.translate(100, 100);
         ctx.beginPath();
-        ctx.arc(0, 0, 100, 0, 2 * Math.PI);
+        ctx.arc(0, 0, 98, 0, 2 * Math.PI);
         ctx.fillStyle = "#fff";
         ctx.fill();
         ctx.stroke();
@@ -37,8 +37,8 @@ const DesktopClock: React.FC = () => {
         for (let i = 0; i < hourArr.length; i++) {
           ctx.fillText(
             hourArr[i].toString(),
-            86 * Math.cos(((i * 30 - 60) * Math.PI) / 180),
-            86 * Math.sin(((i * 30 - 60) * Math.PI) / 180)
+            84 * Math.cos(((i * 30 - 60) * Math.PI) / 180),
+            84 * Math.sin(((i * 30 - 60) * Math.PI) / 180)
           );
         }
       };
