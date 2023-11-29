@@ -20,7 +20,7 @@ const DesktopClock: React.FC = () => {
         ctx.translate(100, 100);
         ctx.beginPath();
         ctx.arc(0, 0, 98, 0, 2 * Math.PI);
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = "rgba(255, 255, 255, 0)";
         ctx.fill();
         ctx.stroke();
         ctx.closePath();

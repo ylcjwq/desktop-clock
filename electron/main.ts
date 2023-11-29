@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from "electron";
+import { app, BrowserWindow, screen, Tray, Menu } from "electron";
 import path from "node:path";
 
 // The built directory structure
@@ -16,6 +16,7 @@ process.env.VITE_PUBLIC = app.isPackaged
   : path.join(process.env.DIST, "../public");
 
 let win: BrowserWindow | null;
+let tray: Tray;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
@@ -48,6 +49,35 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, "index.html"));
   }
+
+  tray = new Tray(path.join(process.env.VITE_PUBLIC, "clock.jpg"));
+
+  // 给托盘图标添加右键菜单
+  const contextMenu = Menu.buildFromTemplate([
+    { label: "显示", click: () => win!.show() },
+    { label: "退出", click: () => app.quit() },
+  ]);
+  tray.setContextMenu(contextMenu);
+
+  // 当点击托盘图标时，显示/隐藏窗口
+  tray.on("click", () => {
+    if (win!.isVisible()) {
+      win!.hide();
+    } else {
+      win!.show();
+    }
+  });
+
+  // 当窗口关闭时，隐藏而不是退出
+  win.on("close", (event) => {
+    event.preventDefault();
+    win!.hide();
+  });
+
+  // 在应用启动后直接隐藏到系统托盘
+  // win.hide();
+  // 隐藏任务栏
+  win.setSkipTaskbar(true);
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -96,3 +126,34 @@ const updateIgnoreMouseEvents = async (x: number, y: number) => {
 };
 
 app.whenReady().then(createWindow);
+
+// app.on("ready", () => {
+//   tray = new Tray(path.join(process.env.VITE_PUBLIC, "electron-vite.svg"));
+
+//   // 给托盘图标添加右键菜单
+//   const contextMenu = Menu.buildFromTemplate([
+//     { label: "显示", click: () => win.show() },
+//     { label: "退出", click: () => app.quit() },
+//   ]);
+//   tray.setContextMenu(contextMenu);
+
+//   // 当点击托盘图标时，显示/隐藏窗口
+//   tray.on("click", () => {
+//     if (win.isVisible()) {
+//       win.hide();
+//     } else {
+//       win.show();
+//     }
+//   });
+
+//   // 当窗口关闭时，隐藏而不是退出
+//   win.on("close", (event) => {
+//     event.preventDefault();
+//     win.hide();
+//   });
+
+//   // 在应用启动后直接隐藏到系统托盘
+//   win.hide();
+//   // 隐藏任务栏
+//   win.setSkipTaskbar(true);
+// });
