@@ -116,4 +116,12 @@ window.onmessage = (ev) => {
   ev.data.payload === "removeLoading" && removeLoading();
 };
 
+// 监听主进程发送的消息
+ipcRenderer.on("MouseStyle", (event, message) => {
+  console.log(message); // 打印主进程发送的消息
+  if (message == false) {
+  } else {
+  }
+});
+
 setTimeout(removeLoading, 4999);

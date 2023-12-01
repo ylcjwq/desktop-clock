@@ -55,8 +55,10 @@ function createWindow() {
   // 给托盘图标添加右键菜单
   const contextMenu = Menu.buildFromTemplate([
     { label: "显示", click: () => win!.show() },
+    { label: "隐藏", click: () => win!.hide() },
     { label: "退出", click: () => app.quit() },
   ]);
+  tray.setToolTip("桌面时钟");
   tray.setContextMenu(contextMenu);
 
   // 当点击托盘图标时，显示/隐藏窗口
@@ -69,10 +71,10 @@ function createWindow() {
   });
 
   // 当窗口关闭时，隐藏而不是退出
-  win.on("close", (event) => {
-    event.preventDefault();
-    win!.hide();
-  });
+  // win.on("close", (event) => {
+  //   event.preventDefault();
+  //   win!.hide();
+  // });
 
   // 在应用启动后直接隐藏到系统托盘
   // win.hide();
@@ -88,6 +90,11 @@ app.on("window-all-closed", () => {
     app.quit();
     win = null;
   }
+});
+
+//开机自启动
+app.setLoginItemSettings({
+  openAtLogin: true,
 });
 
 app.on("activate", () => {
@@ -122,7 +129,13 @@ const updateIgnoreMouseEvents = async (x: number, y: number) => {
 
   // 获取鼠标所在的像素块的alpha通道值
   win!.setIgnoreMouseEvents(!buffer[3]);
-  // console.log("setIgnoreMouseEvents", !buffer[3]);
+
+  if (!buffer[3]) {
+    //发送消息
+    win!.webContents.send("MouseStyle", true);
+  } else {
+    win!.webContents.send("MouseStyle", false);
+  }
 };
 
 app.whenReady().then(createWindow);
