@@ -120,7 +120,11 @@ window.onmessage = (ev) => {
 ipcRenderer.on("MouseStyle", (event, message) => {
   console.log(message); // 打印主进程发送的消息
   if (message == false) {
+    //鼠标变为手型
+    document.body.style.cursor = "pointer";
   } else {
+    //鼠标恢复原状
+    document.body.style.cursor = "default";
   }
 });
 

@@ -22,8 +22,8 @@ const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 300,
-    height: 300,
+    width: 340,
+    height: 340,
     // titleBarStyle: "hidden",
     transparent: true,
     frame: false,
@@ -76,8 +76,6 @@ function createWindow() {
   //   win!.hide();
   // });
 
-  // 在应用启动后直接隐藏到系统托盘
-  // win.hide();
   // 隐藏任务栏
   win.setSkipTaskbar(true);
 }
@@ -139,34 +137,3 @@ const updateIgnoreMouseEvents = async (x: number, y: number) => {
 };
 
 app.whenReady().then(createWindow);
-
-// app.on("ready", () => {
-//   tray = new Tray(path.join(process.env.VITE_PUBLIC, "electron-vite.svg"));
-
-//   // 给托盘图标添加右键菜单
-//   const contextMenu = Menu.buildFromTemplate([
-//     { label: "显示", click: () => win.show() },
-//     { label: "退出", click: () => app.quit() },
-//   ]);
-//   tray.setContextMenu(contextMenu);
-
-//   // 当点击托盘图标时，显示/隐藏窗口
-//   tray.on("click", () => {
-//     if (win.isVisible()) {
-//       win.hide();
-//     } else {
-//       win.show();
-//     }
-//   });
-
-//   // 当窗口关闭时，隐藏而不是退出
-//   win.on("close", (event) => {
-//     event.preventDefault();
-//     win.hide();
-//   });
-
-//   // 在应用启动后直接隐藏到系统托盘
-//   win.hide();
-//   // 隐藏任务栏
-//   win.setSkipTaskbar(true);
-// });
